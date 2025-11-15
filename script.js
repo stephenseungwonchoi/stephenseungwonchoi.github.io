@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // --- 랜딩 페이지 슬라이드쇼 기능 ---
     const slideshowPage = document.querySelector('#page-index');
     if (slideshowPage) {
@@ -281,4 +280,37 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Escape') closeModal();
         });
     }
+
+    const setupLinkViewTransitions = () => {
+        if (!document.startViewTransition) return;
+
+        const isModifiedClick = (event) =>
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey;
+
+        document.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+            const anchor = target.closest('a[href]');
+            if (!anchor) return;
+            if (anchor.target && anchor.target !== '_self') return;
+            if (anchor.hasAttribute('download')) return;
+            if (isModifiedClick(event)) return;
+
+            const url = new URL(anchor.href, window.location.href);
+            if (url.origin !== window.location.origin) return;
+            if (!['http:', 'https:'].includes(url.protocol)) return;
+
+            event.preventDefault();
+            document.startViewTransition(() => {
+                window.location.href = url.href;
+                return new Promise(() => {});
+            });
+        });
+    };
+
+    setupLinkViewTransitions();
 });

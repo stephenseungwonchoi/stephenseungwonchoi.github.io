@@ -11,6 +11,41 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+
+:root {
+    view-transition-name: site-root;
+}
+
+html, body {
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
+}
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+::view-transition-old(site-root) {
+    animation: fade-out 0.35s ease forwards;
+}
+
+::view-transition-new(site-root) {
+    animation: fade-in 0.35s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(site-root),
+    ::view-transition-new(site-root) {
+        animation: none;
+    }
+}
+
 a, a:visited {
     text-decoration: none;
     color: inherit;
@@ -29,6 +64,10 @@ a, a:visited {
 }
 body.modal-open {
     overflow: hidden;
+}
+
+body {
+    touch-action: pan-x pan-y;
 }
 
 /* 헤더 스타일 */

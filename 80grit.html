@@ -5,111 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>80 Grit | Seungwon Choi</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230000ff%22/></svg>">
     <style>
-        #page-projects {
-            overflow-y: auto;
-        }
+        #page-projects { overflow-y: auto; }
+        .content-wrapper { max-width: 800px; margin: 0 auto; padding: 4rem 2.5rem 0 2.5rem; }
+        .image-stack { width: 100%; margin-bottom: 4rem; }
+        .image-stack img, .install-grid img { width: 100%; height: auto; display: block; margin-bottom: 2rem; cursor: pointer; }
+        .diptych-row { display: flex; width: 100%; gap: 0; margin-bottom: 2rem; }
+        .diptych-row img { width: 50%; margin-bottom: 0; }
+        
+        .text-content { font-size: 0.8rem; line-height: 1.8; color: #333; text-align: justify; word-break: keep-all; }
+        .text-section { margin-bottom: 8rem; }
+        .text-section:last-of-type { margin-bottom: 0; }
+        .text-header { margin-bottom: 2.5rem; line-height: 1.6; }
+        .text-header .title { font-weight: 600; display: block; }
+        .description-paragraph { margin-bottom: 1.5rem; }
+        .text-section:last-of-type .description-paragraph:last-child { margin-bottom: 0; }
 
-        .content-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 4rem 2.5rem 0 2.5rem; 
-        }
-
-        /* 메인 이미지 스타일 */
-        .image-stack {
-            width: 100%;
-            margin-bottom: 4rem; /* 4번 사진과 본문 사이의 간격 */
-        }
-
-        .image-stack img, .install-grid img {
-            width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 2rem;
-            cursor: pointer;
-        }
-
-        /* 딥틱 레이아웃 (2,3번) */
-        .diptych-row {
-            display: flex;
-            width: 100%;
-            gap: 0; 
-            margin-bottom: 2rem;
-        }
-
-        .diptych-row img {
-            width: 50%; 
-            margin-bottom: 0; 
-        }
-
-        /* 본문 텍스트 스타일 */
-        .text-content {
-            font-size: 0.8rem;
-            line-height: 1.8;
-            color: #333;
-            text-align: justify;
-            word-break: keep-all;
-        }
-
-        .text-section {
-            margin-bottom: 8rem;
-        }
-
-        /* 마지막 텍스트 섹션의 하단 여백 제거하여 간격 일치 */
-        .text-section:last-of-type {
-            margin-bottom: 0;
-        }
-
-        .text-header {
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-        }
-
-        .text-header .title {
-            font-weight: 600;
-            display: block;
-        }
-
-        .description-paragraph {
-            margin-bottom: 1.5rem;
-        }
-
-        /* 마지막 문단의 기본 브라우저 여백 제거 */
-        .text-section:last-of-type .description-paragraph:last-child {
-            margin-bottom: 0;
-        }
-
-        /* 인스톨레이션 섹션 */
-        .installation-section {
-            width: 100%;
-            /* 상단 여백을 이미지 스택과 동일한 4rem으로 설정 */
-            margin-top: 4rem;
-            margin-bottom: 10rem;
-        }
-
-        .installation-label {
-            font-size: 0.8rem;
-            line-height: 1.8;
-            color: #333;
-            display: block;
-            margin-bottom: 2.5rem;
-            text-align: left;
-        }
-
-        .install-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .install-grid img {
-            margin-bottom: 0;
-        }
+        .installation-section { width: 100%; margin-top: 4rem; margin-bottom: 10rem; }
+        .installation-label { font-size: 0.8rem; line-height: 1.8; color: #333; display: block; margin-bottom: 2.5rem; text-align: left; }
+        .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .install-grid img { margin-bottom: 0; }
 
         @media (max-width: 992px) {
             .content-wrapper { padding: 3rem 2rem 0 2rem; }
-            .text-content { text-align: left; }
+            .installation-section { padding: 0 2rem; }
+            /* 모바일에서 이미지가 너무 작지 않게 그리드 유지 */
+            .install-grid { gap: 8px; }
         }
     </style>
 </head>
@@ -121,6 +43,9 @@
                 <span class="hover-name">STEPHEN CHOI</span>
             </a>
         </div>
+        <nav class="main-nav">
+            <ul><li><a href="/projects">PROJECTS</a></li></ul>
+        </nav>
     </header>
 
     <main class="main-container">
@@ -139,36 +64,18 @@
                 <div class="text-content">
                     <div class="text-section">
                         <div class="text-header">
-                            <span class="title">80 Grit</span>
-                            2025<br>
-                            최승원
+                            <span class="title">80 Grit</span>2025<br>최승원
                         </div>
-                        <p class="description-paragraph">
-                            다년간 스케이트보드를 탄 개인적 경험에 기반하여, 스케이트보딩을 ‘접촉’을 통해 환경과 끊임없이 관계 맺는 하나의 시스템으로 바라본다. 이 시스템 안에서, 작업은 서로에게 영향을 주고 받는 두 표면을 관찰하는데, 하나의 표면이 닳아 없어지면 다른 표면에는 그 파편들이 쌓여 새로운 구성이 만들어지는 것을 포착하고자 하였다. 한쪽을 부수는 행위가 동시에 다른 쪽을 만들어내는 아이러니를 들여다 보았다. 이처럼 서로 맞닿고, 튕기고, 부딪히고, 긁히며 상처가 생기지만 동시에 또 다른 것이 만들어지는 이 접촉의 과정을 ‘관계’라고 봤다.
-                        </p>
-                        <p class="description-paragraph">
-                            이러한 ‘관계’를 시각적으로 기록하고자, 스케잇 슈즈의 닳는 부분과 보드 위에 올라가는 그립테입(사포)의 부분을 대상으로 삼아 극도로 근접시켜 촬영하는 방법론을 사용하였다. 극단적인 클로즈업을 통해 원래의 맥락과 스케일을 지워냄으로써, 대상을 그 자체의 물질성으로만 마주하게 하고자 하였다.
-                        </p>
-                        <p class="description-paragraph">
-                            육안으로는 쉽게 인지할 수 없는 표면의 미세한 질감과 물질적 교환의 흔적을 가까이 들여다 봄으로써, ‘접촉’이라는 가장 기본적인 행위 뒤에, 숨겨진 소멸과 생성이 순환하는 패턴을 드러내고자 하였다. 완성된 이미지들은 원래의 사물이 신발인지, 보드인지, 혹은 전혀 다른 무언가인지를 식별할 수 없는 추상적 표면으로만 표현한다. 이러한 익명성과 불완전성은 역설적으로 보는 이로 하여금 촉각적 상상을 불러일으킨다. 시각적으로 대상을 알 수 없지만, 거칠게 긁힌 질감, 겹겹이 쌓인 먼지의 층위, 마모된 섬유의 결은 마치 손끝으로 더듬는 듯한 감각을 전달한다. 접촉의 결과를 보여주면서도, 그것이 어떤 접촉이었는지는 알 수 없게 만드는 이 이미지들은, 시각을 넘어선 체화된 감각, 거침, 마찰, 저항으로의 경험을 제공하고자 하였다.
-                        </p>
+                        <p class="description-paragraph">다년간 스케이트보드를 탄 개인적 경험에 기반하여, 스케이트보딩을 ‘접촉’을 통해 환경과 끊임없이 관계 맺는 하나의 시스템으로 바라본다. 이 시스템 안에서, 작업은 서로에게 영향을 주고 받는 두 표면을 관찰하는데, 하나의 표면이 닳아 없어지면 다른 표면에는 그 파편들이 쌓여 새로운 구성이 만들어지는 것을 포착하고자 하였다. 한쪽을 부수는 행위가 동시에 다른 쪽을 만들어내는 아이러니를 들여다 보았다. 이처럼 서로 맞닿고, 튕기고, 부딪히고, 긁히며 상처가 생기지만 동시에 또 다른 것이 만들어지는 이 접촉의 과정을 ‘관계’라고 봤다.</p>
+                        <p class="description-paragraph">이러한 ‘관계’를 시각적으로 기록하고자, 스케잇 슈즈의 닳는 부분과 보드 위에 올라가는 그립테입(사포)의 부분을 대상으로 삼아 극도로 근접시켜 촬영하는 방법론을 사용하였다. 극단적인 클로즈업을 통해 원래의 맥락과 스케일을 지워냄으로써, 대상을 그 자체의 물질성으로만 마주하게 하고자 하였다.</p>
+                        <p class="description-paragraph">육안으로는 쉽게 인지할 수 없는 표면의 미세한 질감과 물질적 교환의 흔적을 가까이 들여다 봄으로써, ‘접촉’이라는 가장 기본적인 행위 뒤에, 숨겨진 소멸과 생성이 순환하는 패턴을 드러내고자 하였다.</p>
                     </div>
 
                     <div class="text-section">
                         <div class="text-header">
-                            <span class="title">80 Grit</span>
-                            2025<br>
-                            Choi Seungwon
+                            <span class="title">80 Grit</span>2025<br>Choi Seungwon
                         </div>
-                        <p class="description-paragraph">
-                            Based on personal experiences from skateboarding for many years, this work views skateboarding as a system of engaging with the environment through 'contact'. Within this system, the work observes the relationship between two mutually affecting surfaces, seeking to capture the process wherein as one surface is worn away, its fragments accumulate on the other, forming a new composition. I observed the irony of an act of destruction simultaneously creating something new. This process of contact—touching, rebounding, colliding, scratching, and wounding, yet simultaneously creating something else—was viewed as a 'relationship'.
-                        </p>
-                        <p class="description-paragraph">
-                            To visually record this 'relationship', a methodology of extreme close-up photography was used, targeting the worn areas of skate shoes and the griptape (sandpaper) on the board. Through extreme close-ups, the original context and scale are erased, aiming to confront the subject purely through its own materiality.
-                        </p>
-                        <p class="description-paragraph">
-                            By closely examining the fine textures and traces of material exchange, imperceptible to the naked eye, the work seeks to reveal the hidden cyclical pattern of destruction and creation behind the fundamental act of 'contact'. The resulting images are expressed only as abstract surfaces, where the original object—whether a shoe, a board, or something else entirely—is unidentifiable. This anonymity and incompleteness paradoxically evoke a tactile imagination in the viewer. Although the subject cannot be identified visually, the rough scratched textures, the layers of accumulated dust, and the grain of abraded fibers convey a sensation akin to fumbling with fingertips. These images, which show the results of contact while obscuring what kind of contact it was, seek to provide an experience beyond the visual: an embodied sense of roughness, friction, and resistance.
-                        </p>
+                        <p class="description-paragraph">Based on personal experiences from skateboarding for many years, this work views skateboarding as a system of engaging with the environment through 'contact'. Within this system, the work observes the relationship between two mutually affecting surfaces, seeking to capture the process wherein as one surface is worn away, its fragments accumulate on the other, forming a new composition.</p>
                     </div>
                 </div>
 
@@ -197,9 +104,7 @@
         <span class="modal-grid-toggle">VIEW ALL</span>
     </div>
 
-    <div class="info-link-container">
-        <a href="/info">INFO</a>
-    </div>
+    <div class="info-link-container"><a href="/info">INFO</a></div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>80 Grit | Seungwon Choi</title>
+    <title>80 Grit</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230000ff%22/></svg>">
     <style>
         #page-projects { overflow-y: auto; }
-        .content-wrapper { max-width: 800px; margin: 0 auto; padding: 4rem 2.5rem 0 2.5rem; }
         
+        /* 전체 컨테이너 정렬 및 너비 통일 */
+        .content-wrapper, .installation-section { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding-left: 2.5rem; 
+            padding-right: 2.5rem;
+            box-sizing: border-box;
+        }
+
+        .content-wrapper { padding-top: 4rem; }
+
         /* 이미지 스타일 */
         .image-stack { width: 100%; margin-bottom: 4rem; }
         .image-stack img, .install-grid img { 
             width: 100%; height: auto; display: block; 
             margin-bottom: 2rem; cursor: pointer; 
         }
+        
         .diptych-row { display: flex; width: 100%; gap: 0; margin-bottom: 2rem; }
         .diptych-row img { width: 50%; margin-bottom: 0; }
 
@@ -26,17 +37,33 @@
         .text-header { margin-bottom: 2.5rem; line-height: 1.6; }
         .text-header .title { font-weight: 600; display: block; }
         .description-paragraph { margin-bottom: 1.5rem; }
-        .text-section:last-of-type .description-paragraph:last-child { margin-bottom: 0; }
 
-        /* 인스톨레이션 뷰 섹션 */
-        .installation-section { width: 100%; margin-top: 4rem; margin-bottom: 10rem; }
-        .installation-label { font-size: 0.8rem; line-height: 1.8; color: #333; display: block; margin-bottom: 2.5rem; text-align: left; }
-        .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        /* 인스톨레이션 뷰 섹션 정렬 및 여백 일치 */
+        .installation-section { 
+            margin-top: 4rem; 
+            margin-bottom: 10rem;
+            text-align: left;
+        }
+        .installation-label { 
+            font-size: 0.8rem; 
+            line-height: 1.8; 
+            color: #333; 
+            display: block; 
+            margin-bottom: 2.5rem; 
+        }
+        .install-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+        }
         .install-grid img { margin-bottom: 0; }
 
         @media (max-width: 992px) {
-            .content-wrapper { padding: 3rem 2rem 0 2rem; }
-            .installation-section { padding: 0 2rem; }
+            .content-wrapper, .installation-section { 
+                padding-left: 2rem; 
+                padding-right: 2rem; 
+            }
+            .content-wrapper { padding-top: 3rem; }
         }
     </style>
 </head>
@@ -81,8 +108,7 @@
                             <span class="title">80 Grit</span>2025<br>Choi Seungwon
                         </div>
                         <p class="description-paragraph">Based on personal experiences from skateboarding for many years, this work views skateboarding as a system of engaging with the environment through 'contact'. Within this system, the work observes the relationship between two mutually affecting surfaces, seeking to capture the process wherein as one surface is worn away, its fragments accumulate on the other, forming a new composition. I observed the irony of an act of destruction simultaneously creating something new. This process of contact—touching, rebounding, colliding, scratching, and wounding, yet simultaneously creating something else—was viewed as a 'relationship'.</p>
-                        <p class="description-paragraph">To visually record this 'relationship', a methodology of extreme close-up photography was used, targeting the worn areas of skate shoes and the griptape (sandpaper) on the board. Through extreme close-ups, the original context and scale are erased, aiming to confront the subject purely through its own materiality.</p>
-                        <p class="description-paragraph">By closely examining the fine textures and traces of material exchange, imperceptible to the naked eye, the work seeks to reveal the hidden cyclical pattern of destruction and creation behind the fundamental act of 'contact'. The resulting images are expressed only as abstract surfaces, where the original object—whether a shoe, a board, or something else entirely—is unidentifiable. This anonymity and incompleteness paradoxically evoke a tactile imagination in the viewer. Although the subject cannot be identified visually, the rough scratched textures, the layers of accumulated dust, and the grain of abraded fibers convey a sensation akin to fumbling with fingertips. These images, which show the results of contact while obscuring what kind of contact it was, seek to provide an experience beyond the visual: an embodied sense of roughness, friction, and resistance.</p>
+                        <p class="description-paragraph">To visually record this 'relationship', a methodology of extreme close-up photography was used, targeting the worn areas of skate shoes and the griptape (sandpaper) on the board. Through extreme close-ups, the original context and scale are erased, aiming to confront the subject purely through its own materiality. By closely examining the fine textures and traces of material exchange, imperceptible to the naked eye, the work seeks to reveal the hidden cyclical pattern of destruction and creation behind the fundamental act of 'contact'. The resulting images are expressed only as abstract surfaces, where the original object—whether a shoe, a board, or something else entirely—is unidentifiable. This anonymity and incompleteness paradoxically evoke a tactile imagination in the viewer. Although the subject cannot be identified visually, the rough scratched textures, the layers of accumulated dust, and the grain of abraded fibers convey a sensation akin to fumbling with fingertips. These images, which show the results of contact while obscuring what kind of contact it was, seek to provide an experience beyond the visual: an embodied sense of roughness, friction, and resistance.</p>
                     </div>
                 </div>
 

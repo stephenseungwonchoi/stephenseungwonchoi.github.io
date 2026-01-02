@@ -12,13 +12,11 @@
             max-width: 800px; margin: 0 auto; padding-left: 2.5rem; padding-right: 2.5rem; box-sizing: border-box; 
         }
         .content-wrapper { padding-top: 4rem; }
-        .image-stack { width: 100%; margin-bottom: 4rem; }
         .image-stack img, .install-grid img { width: 100%; height: auto; display: block; margin-bottom: 2rem; cursor: pointer; }
         .diptych-row { display: flex; width: 100%; gap: 0; margin-bottom: 2rem; }
         .diptych-row img { width: 50%; margin-bottom: 0; }
         .text-content { font-size: 0.8rem; line-height: 1.8; color: #333; text-align: justify; word-break: keep-all; }
         .text-section { margin-bottom: 8rem; }
-        .text-section:last-of-type { margin-bottom: 0; }
         .text-header { margin-bottom: 2.5rem; line-height: 1.6; }
         .text-header .title { font-weight: 600; display: block; }
         .description-paragraph { margin-bottom: 1.5rem; }
@@ -26,6 +24,25 @@
         .installation-label { font-size: 0.8rem; line-height: 1.8; color: #333; display: block; margin-bottom: 2.5rem; }
         .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .install-grid img { margin-bottom: 0; }
+
+        /* 모달 내부 줌 전용 스타일 */
+        .modal-content { 
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
+            height: 100%; 
+            touch-action: none; /* 브라우저 기본 줌/스크롤 방지 */
+        }
+        #modal-image { 
+            max-width: 95%; 
+            max-height: 90vh; 
+            transition: transform 0.1s ease-out; 
+            will-change: transform;
+            cursor: grab;
+        }
+        .modal-open { overflow: hidden; }
 
         @media (max-width: 992px) {
             .content-wrapper, .installation-section { padding-left: 2rem; padding-right: 2rem; }
@@ -36,20 +53,14 @@
 <body id="page-projects">
     <header class="site-header">
         <div class="logo">
-            <a href="/">
-                <span class="original-name">SEUNGWON CHOI</span>
-                <span class="hover-name">STEPHEN CHOI</span>
-            </a>
+            <a href="/"><span class="original-name">SEUNGWON CHOI</span><span class="hover-name">STEPHEN CHOI</span></a>
         </div>
-        <nav class="main-nav">
-            <ul><li><a href="/projects">PROJECTS</a></li></ul>
-        </nav>
+        <nav class="main-nav"><ul><li><a href="/projects">PROJECTS</a></li></ul></nav>
     </header>
 
     <main class="main-container">
         <div class="content-wrapper">
-            <div class="project-item" data-gallery='["img/80grit1.avif", "img/80grit2.avif", "img/80grit3.avif", "img/80grit4.avif", "img/80grit5.avif", "img/80grit6.avif", "img/80grit7.avif", "img/80grit8.avif"]'>
-                
+            <div class="project-item" id="gallery-work" data-gallery='["img/80grit1.avif", "img/80grit2.avif", "img/80grit3.avif", "img/80grit4.avif"]'>
                 <div class="image-stack">
                     <img src="img/80grit1.avif" alt="80 Grit 1">
                     <div class="diptych-row">
@@ -58,7 +69,6 @@
                     </div>
                     <img src="img/80grit4.avif" alt="80 Grit 4">
                 </div>
-
                 <div class="text-content">
                     <div class="text-section">
                         <div class="text-header"><span class="title">80 Grit</span>2025<br>최승원</div>
@@ -66,25 +76,25 @@
                         <p class="description-paragraph">이러한 ‘관계’를 시각적으로 기록하고자, 스케잇 슈즈의 닳는 부분과 보드 위에 올라가는 그립테입(사포)의 부분을 대상으로 삼아 극도로 근접시켜 촬영하는 방법론을 사용하였다. 극단적인 클로즈업을 통해 원래의 맥락과 스케일을 지워냄으로써, 대상을 그 자체의 물질성으로만 마주하게 하고자 하였다.</p>
                         <p class="description-paragraph">육안으로는 쉽게 인지할 수 없는 표면의 미세한 질감과 물질적 교환의 흔적을 가까이 들여다 봄으로써, ‘접촉’이라는 가장 기본적인 행위 뒤에, 숨겨진 소멸과 생성이 순환하는 패턴을 드러내고자 하였다. 완성된 이미지들은 원래의 사물이 신발인지, 보드인지, 혹은 전혀 다른 무언가인지를 식별할 수 없는 추상적 표면으로만 표현한다. 이러한 익명성과 불완전성은 역설적으로 보는 이로 하여금 촉각적 상상을 불러일으킨다. 시각적으로 대상을 알 수 없지만, 거칠게 긁힌 질감, 겹겹이 쌓인 먼지의 층위, 마모된 섬유의 결은 마치 손끝으로 더듬는 듯한 감각을 전달한다. 접촉의 결과를 보여주면서도, 그것이 어떤 접촉이었는지는 알 수 없게 만드는 이 이미지들은, 시각을 넘어선 체화된 감각, 거침, 마찰, 저항으로의 경험을 제공하고자 하였다.</p>
                     </div>
-
                     <div class="text-section">
                         <div class="text-header"><span class="title">80 Grit</span>2025<br>Choi Seungwon</div>
-                        <p class="description-paragraph">Based on personal experiences from skateboarding for many years, this work views skateboarding as a system of engaging with the environment through 'contact'. Within this system, the work observes the relationship between two mutually affecting surfaces, seeking to capture the process wherein as one surface is worn away, its fragments accumulate on the other, forming a new composition. I observed the irony of an act of destruction simultaneously creating something new. This process of contact—touching, rebounding, colliding, scratching, and wounding, yet simultaneously creating something else—was viewed as a 'relationship'.</p>
-                        <p class="description-paragraph">To visually record this 'relationship', a methodology of extreme close-up photography was used, targeting the worn areas of skate shoes and the griptape (sandpaper) on the board. Through extreme close-ups, the original context and scale are erased, aiming to confront the subject purely through its own materiality. By closely examining the fine textures and traces of material exchange, imperceptible to the naked eye, the work seeks to reveal the hidden cyclical pattern of destruction and creation behind the fundamental act of 'contact'. The resulting images are expressed only as abstract surfaces, where the original object—whether a shoe, a board, or something else entirely—is unidentifiable. This anonymity and incompleteness paradoxically evoke a tactile imagination in the viewer. Although the subject cannot be identified visually, the rough scratched textures, the layers of accumulated dust, and the grain of abraded fibers convey a sensation akin to fumbling with fingertips. These images, which show the results of contact while obscuring what kind of contact it was, seek to provide an experience beyond the visual: an embodied sense of roughness, friction, and resistance.</p>
+                        <p class="description-paragraph">Based on personal experiences from skateboarding for many years, this work views skateboarding as a system of engaging with the environment through 'contact'. Within this system, the work observes the relationship between two mutually affecting surfaces, seeking to capture the process wherein as one surface is worn away, its fragments accumulate on the other, forming a new composition. I observed the irony of an act of destruction simultaneously creating something new. This process of contact—touching, rebounding, colliding, scratching, and wounding, yet simultaneously creating something else—was viewed as a 'relationship'. To visually record this 'relationship', a methodology of extreme close-up photography was used, targeting the worn areas of skate shoes and the griptape (sandpaper) on the board. Through extreme close-ups, the original context and scale are erased, aiming to confront the subject purely through its own materiality. By closely examining the fine textures and traces of material exchange, imperceptible to the naked eye, the work seeks to reveal the hidden cyclical pattern of destruction and creation behind the fundamental act of 'contact'. The resulting images are expressed only as abstract surfaces, where the original object—whether a shoe, a board, or something else entirely—is unidentifiable. This anonymity and incompleteness paradoxically evoke a tactile imagination in the viewer. Although the subject cannot be identified visually, the rough scratched textures, the layers of accumulated dust, and the grain of abraded fibers convey a sensation akin to fumbling with fingertips. These images, which show the results of contact while obscuring what kind of contact it was, seek to provide an experience beyond the visual: an embodied sense of roughness, friction, and resistance.</p>
                     </div>
                 </div>
-
-                <section class="installation-section">
-                    <span class="installation-label">INSTALLATION VIEW</span>
-                    <div class="install-grid">
-                        <img src="img/80grit5.avif" alt="Install 5">
-                        <img src="img/80grit6.avif" alt="Install 6">
-                        <img src="img/80grit7.avif" alt="Install 7">
-                        <img src="img/80grit8.avif" alt="Install 8">
-                    </div>
-                </section>
             </div>
         </div>
+
+        <section class="installation-section">
+            <div class="project-item" id="gallery-install" data-gallery='["img/80grit5.avif", "img/80grit6.avif", "img/80grit7.avif", "img/80grit8.avif"]'>
+                <span class="installation-label">INSTALLATION VIEW</span>
+                <div class="install-grid">
+                    <img src="img/80grit5.avif" alt="Install 5">
+                    <img src="img/80grit6.avif" alt="Install 6">
+                    <img src="img/80grit7.avif" alt="Install 7">
+                    <img src="img/80grit8.avif" alt="Install 8">
+                </div>
+            </div>
+        </section>
     </main>
 
     <div id="image-viewer" class="modal-overlay">
@@ -94,72 +104,88 @@
             <div class="modal-nav prev"></div>
             <div class="modal-nav next"></div>
         </div>
-        <div class="modal-grid-view"></div>
         <div class="modal-counter"></div>
-        <span class="modal-grid-toggle">VIEW ALL</span>
     </div>
 
     <div class="info-link-container"><a href="/info">INFO</a></div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const projectItem = document.querySelector('.project-item');
             const viewer = document.getElementById('image-viewer');
             const modalImg = document.getElementById('modal-image');
             const modalCounter = document.querySelector('.modal-counter');
             const closeBtn = document.querySelector('.modal-close');
-            const nextBtn = document.querySelector('.modal-nav.next');
-            const prevBtn = document.querySelector('.modal-nav.prev');
             
-            let gallery = JSON.parse(projectItem.dataset.gallery);
+            let currentGallery = [];
             let currentIndex = 0;
 
+            // 줌 관련 변수
+            let scale = 1;
+            let evCache = [];
+            let prevDiff = -1;
+
             function updateModal() {
-                modalImg.src = gallery[currentIndex];
-                modalCounter.textContent = `${currentIndex + 1} of ${gallery.length}`;
+                scale = 1;
+                modalImg.style.transform = `scale(${scale})`;
+                modalImg.src = currentGallery[currentIndex];
+                modalCounter.textContent = `${currentIndex + 1} of ${currentGallery.length}`;
             }
 
-            // 본문의 모든 이미지를 클릭했을 때 모달 열기
-            document.querySelectorAll('.image-stack img, .install-grid img').forEach((img, idx) => {
-                img.addEventListener('click', () => {
-                    // 클릭한 이미지의 src를 기반으로 인덱스 찾기
-                    const clickedSrc = img.getAttribute('src');
-                    currentIndex = gallery.findIndex(src => src === clickedSrc);
-                    if (currentIndex === -1) currentIndex = 0;
-                    
-                    viewer.classList.add('visible');
-                    document.body.classList.add('modal-open');
-                    updateModal();
+            document.querySelectorAll('.project-item').forEach(item => {
+                const imgs = item.querySelectorAll('img');
+                const galleryData = JSON.parse(item.dataset.gallery);
+                imgs.forEach(img => {
+                    img.addEventListener('click', () => {
+                        currentGallery = galleryData;
+                        currentIndex = currentGallery.indexOf(img.getAttribute('src'));
+                        viewer.classList.add('visible');
+                        document.body.classList.add('modal-open');
+                        updateModal();
+                    });
                 });
             });
 
+            // 모바일 핀치 줌 로직 (모달 내에서만 작동)
+            modalImg.addEventListener('pointerdown', e => evCache.push(e));
+            modalImg.addEventListener('pointermove', e => {
+                const index = evCache.findIndex(ev => ev.pointerId === e.pointerId);
+                evCache[index] = e;
+
+                if (evCache.length === 2) {
+                    const curDiff = Math.hypot(evCache[0].clientX - evCache[1].clientX, evCache[0].clientY - evCache[1].clientY);
+                    if (prevDiff > 0) {
+                        if (curDiff > prevDiff) scale += 0.05;
+                        else if (curDiff < prevDiff && scale > 1) scale -= 0.05;
+                        modalImg.style.transform = `scale(${scale})`;
+                    }
+                    prevDiff = curDiff;
+                }
+            });
+            const stopZoom = e => {
+                evCache = evCache.filter(ev => ev.pointerId !== e.pointerId);
+                if (evCache.length < 2) prevDiff = -1;
+            };
+            modalImg.addEventListener('pointerup', stopZoom);
+            modalImg.addEventListener('pointercancel', stopZoom);
+            modalImg.addEventListener('pointerout', stopZoom);
+            modalImg.addEventListener('pointerleave', stopZoom);
+
+            // 네비게이션 및 닫기
+            document.querySelector('.modal-nav.next').addEventListener('click', e => {
+                e.stopPropagation();
+                currentIndex = (currentIndex + 1) % currentGallery.length;
+                updateModal();
+            });
+            document.querySelector('.modal-nav.prev').addEventListener('click', e => {
+                e.stopPropagation();
+                currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+                updateModal();
+            });
             closeBtn.addEventListener('click', () => {
                 viewer.classList.remove('visible');
                 document.body.classList.remove('modal-open');
             });
-
-            nextBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentIndex = (currentIndex + 1) % gallery.length;
-                updateModal();
-            });
-
-            prevBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentIndex = (currentIndex - 1 + gallery.length) % gallery.length;
-                updateModal();
-            });
-
-            viewer.addEventListener('click', (e) => {
-                if (e.target === viewer) closeBtn.click();
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (!viewer.classList.contains('visible')) return;
-                if (e.key === 'ArrowRight') nextBtn.click();
-                if (e.key === 'ArrowLeft') prevBtn.click();
-                if (e.key === 'Escape') closeBtn.click();
-            });
+            viewer.addEventListener('click', e => { if (e.target === viewer || e.target.classList.contains('modal-content')) closeBtn.click(); });
         });
     </script>
 </body>

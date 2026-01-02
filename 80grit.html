@@ -25,22 +25,26 @@
         .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .install-grid img { margin-bottom: 0; }
 
-        /* 모달 내부 줌 전용 스타일 */
+        /* 모달 줌 인터페이스 강화 */
         .modal-content { 
+            position: relative;
             overflow: hidden; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
             width: 100%; 
             height: 100%; 
-            touch-action: none; /* 브라우저 기본 줌/스크롤 방지 */
+            touch-action: none; /* 전체 페이지 줌 방지 및 스크립트 제어 권한 획득 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         #modal-image { 
             max-width: 95%; 
             max-height: 90vh; 
             transition: transform 0.1s ease-out; 
+            transform-origin: center center;
             will-change: transform;
             cursor: grab;
+            user-select: none;
+            -webkit-user-drag: none;
         }
         .modal-open { overflow: hidden; }
 
@@ -60,7 +64,7 @@
 
     <main class="main-container">
         <div class="content-wrapper">
-            <div class="project-item" id="gallery-work" data-gallery='["img/80grit1.avif", "img/80grit2.avif", "img/80grit3.avif", "img/80grit4.avif"]'>
+            <div class="project-item" data-gallery='["img/80grit1.avif", "img/80grit2.avif", "img/80grit3.avif", "img/80grit4.avif"]'>
                 <div class="image-stack">
                     <img src="img/80grit1.avif" alt="80 Grit 1">
                     <div class="diptych-row">
@@ -85,7 +89,7 @@
         </div>
 
         <section class="installation-section">
-            <div class="project-item" id="gallery-install" data-gallery='["img/80grit5.avif", "img/80grit6.avif", "img/80grit7.avif", "img/80grit8.avif"]'>
+            <div class="project-item" data-gallery='["img/80grit5.avif", "img/80grit6.avif", "img/80grit7.avif", "img/80grit8.avif"]'>
                 <span class="installation-label">INSTALLATION VIEW</span>
                 <div class="install-grid">
                     <img src="img/80grit5.avif" alt="Install 5">
@@ -119,22 +123,22 @@
             let currentGallery = [];
             let currentIndex = 0;
 
-            // 줌 관련 변수
+            // 줌 변수
             let scale = 1;
-            let evCache = [];
-            let prevDiff = -1;
+            let initialDistance = 0;
+            let currentScale = 1;
 
             function updateModal() {
                 scale = 1;
+                currentScale = 1;
                 modalImg.style.transform = `scale(${scale})`;
                 modalImg.src = currentGallery[currentIndex];
                 modalCounter.textContent = `${currentIndex + 1} of ${currentGallery.length}`;
             }
 
             document.querySelectorAll('.project-item').forEach(item => {
-                const imgs = item.querySelectorAll('img');
                 const galleryData = JSON.parse(item.dataset.gallery);
-                imgs.forEach(img => {
+                item.querySelectorAll('img').forEach(img => {
                     img.addEventListener('click', () => {
                         currentGallery = galleryData;
                         currentIndex = currentGallery.indexOf(img.getAttribute('src'));
@@ -145,32 +149,52 @@
                 });
             });
 
-            // 모바일 핀치 줌 로직 (모달 내에서만 작동)
-            modalImg.addEventListener('pointerdown', e => evCache.push(e));
-            modalImg.addEventListener('pointermove', e => {
-                const index = evCache.findIndex(ev => ev.pointerId === e.pointerId);
-                evCache[index] = e;
+            // 강력한 핀치 줌 로직
+            const modalContent = document.querySelector('.modal-content');
 
-                if (evCache.length === 2) {
-                    const curDiff = Math.hypot(evCache[0].clientX - evCache[1].clientX, evCache[0].clientY - evCache[1].clientY);
-                    if (prevDiff > 0) {
-                        if (curDiff > prevDiff) scale += 0.05;
-                        else if (curDiff < prevDiff && scale > 1) scale -= 0.05;
-                        modalImg.style.transform = `scale(${scale})`;
-                    }
-                    prevDiff = curDiff;
+            modalContent.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                    initialDistance = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                }
+            }, { passive: false });
+
+            modalContent.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 2) {
+                    e.preventDefault(); // 브라우저 기본 줌 완전 차단
+                    const currentDistance = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    
+                    const zoomFactor = currentDistance / initialDistance;
+                    scale = Math.min(Math.max(1, currentScale * zoomFactor), 4); // 최대 4배
+                    modalImg.style.transform = `scale(${scale})`;
+                }
+            }, { passive: false });
+
+            modalContent.addEventListener('touchend', (e) => {
+                if (e.touches.length < 2) {
+                    currentScale = scale;
                 }
             });
-            const stopZoom = e => {
-                evCache = evCache.filter(ev => ev.pointerId !== e.pointerId);
-                if (evCache.length < 2) prevDiff = -1;
-            };
-            modalImg.addEventListener('pointerup', stopZoom);
-            modalImg.addEventListener('pointercancel', stopZoom);
-            modalImg.addEventListener('pointerout', stopZoom);
-            modalImg.addEventListener('pointerleave', stopZoom);
 
-            // 네비게이션 및 닫기
+            // 더블 탭 줌 (빠른 접근성)
+            let lastTap = 0;
+            modalImg.addEventListener('touchend', (e) => {
+                const now = Date.now();
+                if (now - lastTap < 300) {
+                    scale = (scale > 1) ? 1 : 2.5;
+                    currentScale = scale;
+                    modalImg.style.transform = `scale(${scale})`;
+                    e.preventDefault();
+                }
+                lastTap = now;
+            });
+
+            // 네비게이션
             document.querySelector('.modal-nav.next').addEventListener('click', e => {
                 e.stopPropagation();
                 currentIndex = (currentIndex + 1) % currentGallery.length;
@@ -185,7 +209,9 @@
                 viewer.classList.remove('visible');
                 document.body.classList.remove('modal-open');
             });
-            viewer.addEventListener('click', e => { if (e.target === viewer || e.target.classList.contains('modal-content')) closeBtn.click(); });
+            viewer.addEventListener('click', e => { 
+                if (e.target === viewer || e.target === modalContent) closeBtn.click(); 
+            });
         });
     </script>
 </body>

@@ -4,33 +4,204 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #ffffff;
     color: #333;
+    -webkit-tap-highlight-color: transparent;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
-a, a:visited { text-decoration: none; color: inherit; }
 
-/* 헤더 및 로고 스타일 (Stephen Choi 메인 / Seungwon Choi 호버) */
-.site-header { display: flex; justify-content: space-between; padding: 2.5rem; font-size: 0.8rem; box-sizing: border-box; width: 100%; }
-.logo a { position: relative; display: inline-block; text-transform: uppercase; letter-spacing: 0.05em; }
-.logo .original-name, .logo .hover-name { transition: opacity 0.2s ease-in-out; }
-.logo .hover-name { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; text-align: center; opacity: 0; }
+:root {
+    view-transition-name: site-root;
+}
+
+html, body {
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 스크롤 및 줌 방지 */
+#page-index, #page-info {
+    height: 100vh;
+    overflow: hidden;
+    touch-action: manipulation;
+}
+body.modal-open {
+    overflow: hidden;
+}
+body {
+    touch-action: pan-x pan-y;
+}
+
+/* 헤더 스타일 */
+.site-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    padding: 2.5rem; 
+    width: 100%;
+    top: 0; 
+    left: 0; 
+    z-index: 100; 
+    font-size: 0.8rem; 
+    letter-spacing: 0.05em; 
+    box-sizing: border-box; 
+}
+.main-nav ul { list-style: none; display: flex; gap: 1rem; margin:0; padding:0; }
+
+/* --- 로고 스타일 (Stephen Choi 메인 / Seungwon Choi 호버) --- */
+.logo a {
+    text-transform: uppercase;
+    letter-spacing: 0.05em; 
+    font-weight: normal; 
+    word-spacing: normal; 
+    white-space: nowrap;
+    position: relative; 
+    display: inline-block;
+}
+.logo .original-name, .logo .hover-name {
+    transition: opacity 0.2s ease-in-out; 
+}
+.logo .hover-name {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+}
 .logo a:hover .original-name { opacity: 0; }
 .logo a:hover .hover-name { opacity: 1; }
 
-/* 프로젝트 그리드 스타일 */
-.project-grid { padding: 10rem 8rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8rem 4rem; }
-.project-item { display: grid; gap: 1.5rem; cursor: pointer; }
+/* --- 페이지 공통 컨테이너 --- */
+.main-container {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- 메인 페이지(슬라이드쇼) 스타일 --- */
+#page-index .main-container { 
+    position: relative; 
+    justify-content: center; 
+    align-items: center; 
+}
+.slideshow-container { 
+    position: relative; 
+    width: 60%; 
+    height: 80vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    cursor: default; 
+}
+.slide-image { 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out;
+}
+.slide-image.active { 
+    opacity: 1;
+}
+
+/* --- 슬라이드쇼 인터랙션 영역 --- */
+.nav-overlay, .hold-zone {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.nav-overlay {
+    width: 26.1%; 
+    height: 100vh;
+    z-index: 20;
+}
+.hold-zone {
+    width: 47.8%; 
+    height: 82vh; 
+    z-index: 30;
+    cursor: default;
+}
+.nav-overlay.left { left: 13.05%; }
+.nav-overlay.right { left: 86.95%; }
+
+/* --- 슬라이드쇼 카운터 스타일 --- */
+.slideshow-counter {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    font-style: italic;
+    font-family: "Times New Roman", serif;
+    font-weight: normal;
+    letter-spacing: -0.05em; 
+    color: #333;
+    z-index: 10;
+}
+
+/* --- INFO 페이지 스타일 --- */
+#page-info .main-container {
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 2.5rem;
+    box-sizing: border-box;
+}
+.contact-details { text-align: left; }
+.contact-details p { font-size: 0.8rem; line-height: 2; margin: 0; }
+
+/* --- PROJECTS 페이지 스타일 --- */
+#page-projects { overflow-y: auto; }
+.project-grid { 
+    padding: 10rem 8rem;
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8rem 4rem; 
+    align-items: start;
+}
+.project-item { 
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem; 
+    cursor: pointer; 
+}
 .project-image img { width: 100%; height: auto; display: block; }
-.project-description h3 { font-size: 0.8rem; margin: 0 0 0.75rem; font-weight: 600; letter-spacing: 0.05em; }
-.project-description p, .credits { font-size: 0.8rem; line-height: 1.7; color: #555; margin: 0; }
+.project-description { text-align: left; }
+.project-description h3 { 
+    font-size: 0.8rem; 
+    margin: 0 0 0.75rem; 
+    letter-spacing: 0.05em; 
+    font-weight: 600;
+}
+.project-description p { 
+    font-size: 0.8rem; 
+    line-height: 1.7; 
+    color: #555; 
+    margin: 0; 
+}
+.project-description .credits {
+    color: #777;
+    line-height: 1.6;
+    margin-top: 1rem;
+}
+.credit-label { font-weight: 500; color: #555; }
 
 /* --- 모달(이미지 뷰어) 스타일 --- */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; }
 .modal-overlay.visible { display: flex; }
 .modal-content { position: relative; width: 90%; height: 90%; display: flex; justify-content: center; align-items: center; }
 
-/* 이미지 크기 85%로 축소 적용 */
+/* PC 모달 이미지 크기 85% 축소 */
 #modal-image { max-width: 85%; max-height: 85%; object-fit: contain; }
 
 .modal-close { 
@@ -48,7 +219,6 @@ a, a:visited { text-decoration: none; color: inherit; }
 .modal-nav.prev { left: 0; cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='30' style='font-family: &quot;Times New Roman&quot;, serif; font-size: 12px; font-weight: bold; color: white;'><text x='5' y='20'>PREV</text></svg>"), auto; }
 .modal-nav.next { right: 0; cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='30' style='font-family: &quot;Times New Roman&quot;, serif; font-size: 12px; font-weight: bold; color: white;'><text x='5' y='20'>NEXT</text></svg>"), auto; }
 
-/* 카운터 위치, 높이, 폰트 크기를 VIEW ALL과 일치시키도록 수정 */
 .modal-counter { 
     position: absolute; 
     bottom: 2.5rem; 
@@ -60,7 +230,6 @@ a, a:visited { text-decoration: none; color: inherit; }
     z-index: 1010;
 }
 
-/* 펼쳐보기 버튼 스타일 */
 .modal-grid-toggle {
     position: absolute;
     bottom: 2.5rem;
@@ -73,6 +242,51 @@ a, a:visited { text-decoration: none; color: inherit; }
     z-index: 1010;
 }
 
-/* 우측 하단 INFO 링크 */
-.info-link-container { position: fixed; bottom: 2.5rem; right: 2.5rem; z-index: 100; }
+/* --- 오른쪽 하단 INFO 링크 스타일 --- */
+.info-link-container {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    z-index: 100;
+}
 .info-link-container a { font-size: 0.8rem; letter-spacing: 0.05em; }
+
+/* 모바일 반응형 */
+@media (max-width: 992px) {
+    .site-header {
+        position: relative;
+        width: auto;
+        padding: 2rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    .site-header .logo {
+        letter-spacing: 0.35em;
+        margin-right: -0.35em;
+    }
+    .main-nav {
+        width: 100%;
+        display: flex;
+        justify-content: center; 
+        padding-right: 0;
+    }
+    .main-container {
+        height: auto; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    #page-index, #page-info { height: auto; }
+    #page-info .main-container { justify-content: center; align-items: center; }
+    .slideshow-container { width: 100%; height: 60vh; }
+    .slideshow-counter { margin-top: 2.5rem; }
+    .project-grid { grid-template-columns: 1fr; padding: 4rem 2rem 2rem; gap: 5rem; }
+    .project-item { gap: 1rem; }
+    #modal-image { max-width: 100%; max-height: 100%; }
+    .modal-close { top: 1.5rem; right: 1.5rem; }
+    .modal-counter, .modal-grid-toggle { bottom: 1.5rem; }
+    .modal-grid-toggle { right: 1.5rem; display: none; }
+    .info-link-container { bottom: 1rem; right: 1rem; }
+}

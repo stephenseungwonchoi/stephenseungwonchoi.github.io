@@ -1,271 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- 랜딩 페이지 랜덤 2장 표시 ---
-    const slideshowPage = document.querySelector('#page-index');
-    if (slideshowPage) {
-        const pairContainer = slideshowPage.querySelector('#random-landing-pair');
-        const landingImages = [
-            'img/weblanding1.avif',
-            'img/weblanding2.avif',
-            'img/weblanding3.avif'
-        ];
-
-        if (pairContainer && landingImages.length >= 2) {
-            const shuffled = [...landingImages];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-
-            const pickedTwo = shuffled.slice(0, 2);
-            pairContainer.innerHTML = '';
-
-            pickedTwo.forEach((src, idx) => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = `포트폴리오 랜덤 사진 ${idx + 1}`;
-                pairContainer.appendChild(img);
-            });
-        }
-    }
-
-    // --- 프로젝트 페이지 모달 기능 ---
-    const projectPage = document.querySelector('#page-projects');
-    if (projectPage) {
-        const projectGrid = projectPage.querySelector('.project-grid');
-        const imageViewer = document.getElementById('image-viewer');
-        const modalContent = imageViewer ? imageViewer.querySelector('.modal-content') : null;
-        const modalImage = document.getElementById('modal-image');
-        const modalClose = imageViewer ? imageViewer.querySelector('.modal-close') : null;
-        const modalNavs = imageViewer ? imageViewer.querySelectorAll('.modal-nav') : [];
-        const modalCounter = imageViewer ? imageViewer.querySelector('.modal-counter') : null;
-        const siteHeader = document.querySelector('.site-header');
-        
-        const modalGridToggle = imageViewer ? imageViewer.querySelector('.modal-grid-toggle') : null;
-        const modalGridView = imageViewer ? imageViewer.querySelector('.modal-grid-view') : null;
-
-        let currentGallery = [];
-        let currentIndex = 0;
-        let currentLayoutClass = '';
-        let isVimeoMode = false;
-        let vimeoWrapper = null;
-
-        const clearVimeo = function() {
-            if (vimeoWrapper) {
-                vimeoWrapper.remove();
-                vimeoWrapper = null;
-            }
-            if (imageViewer) imageViewer.style.display = '';
-            if (modalContent) modalContent.style.display = '';
-            if (modalGridView) modalGridView.style.display = '';
-            if (modalImage) modalImage.style.display = '';
-            modalNavs.forEach(nav => { nav.style.display = ''; });
-            if (modalCounter) modalCounter.style.display = '';
-            if (modalGridToggle) modalGridToggle.style.display = '';
-        };
-
-        const openVimeoModal = function(vimeoId) {
-            if (!imageViewer || !modalContent) return;
-            clearVimeo();
-            isVimeoMode = true;
-
-            imageViewer.classList.remove('grid-view-active');
-            if (modalGridView) modalGridView.style.display = 'none';
-            modalContent.style.display = 'flex';
-            if (modalImage) modalImage.style.display = 'none';
-            modalNavs.forEach(nav => { nav.style.display = 'none'; });
-            if (modalCounter) modalCounter.style.display = 'none';
-            if (modalGridToggle) modalGridToggle.style.display = 'none';
-
-            vimeoWrapper = document.createElement('div');
-            vimeoWrapper.className = 'modal-vimeo-frame';
-            vimeoWrapper.style.cssText = 'position: relative; height: min(85vh, 900px); width: calc(min(85vh, 900px) * 9 / 16); max-width: 90vw; z-index: 1015;';
-
-            const iframe = document.createElement('iframe');
-            iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0`;
-            iframe.style.cssText = 'width: 100%; height: 100%; border: 0; display: block;';
-            iframe.allow = 'autoplay; fullscreen; picture-in-picture';
-            iframe.allowFullscreen = true;
-
-            vimeoWrapper.appendChild(iframe);
-            modalContent.appendChild(vimeoWrapper);
-
-            imageViewer.classList.add('visible');
-            imageViewer.style.display = 'flex';
-            if (projectGrid) projectGrid.classList.add('blurred');
-            if (siteHeader) siteHeader.classList.add('blurred');
-            document.body.classList.add('modal-open');
-        };
-
-        const updateModal = function() {
-            if (currentGallery.length > 0 && modalImage && modalCounter) {
-                modalImage.src = currentGallery[currentIndex];
-                modalCounter.textContent = `${currentIndex + 1} of ${currentGallery.length}`;
-            }
-        };
-
-        const toggleGridView = (switchToGrid) => {
-            if (!imageViewer || !modalGridView || !modalGridToggle) return;
-            if (switchToGrid) {
-                imageViewer.classList.add('grid-view-active');
-                modalGridView.innerHTML = '';
-                
-                if (currentLayoutClass) {
-                    modalGridView.classList.remove(currentLayoutClass);
-                    modalGridView.classList.add(currentLayoutClass);
-                }
-                
-                currentGallery.forEach((imgSrc, index) => {
-                    const thumb = document.createElement('img');
-                    thumb.src = imgSrc;
-                    thumb.addEventListener('click', () => {
-                        currentIndex = index;
-                        toggleGridView(false);
-                    });
-                    modalGridView.appendChild(thumb);
-                });
-                modalGridToggle.textContent = 'BACK';
-            } else {
-                imageViewer.classList.remove('grid-view-active');
-                updateModal();
-                modalGridToggle.textContent = 'VIEW ALL';
-            }
-        };
-
-        if (modalGridToggle) {
-            modalGridToggle.addEventListener('click', () => {
-                const isGridView = imageViewer.classList.contains('grid-view-active');
-                toggleGridView(!isGridView);
-            });
-        }
-
-        const openModal = function(galleryData, layoutClass = '') {
-            if (!galleryData || galleryData.length === 0 || !imageViewer) return;
-            clearVimeo();
-            isVimeoMode = false;
-
-            currentGallery = galleryData;
-            currentIndex = 0;
-            currentLayoutClass = layoutClass; 
-            
-            if (modalGridView && currentLayoutClass) {
-                if (modalGridView.classList.contains(currentLayoutClass)) {
-                    modalGridView.classList.remove(currentLayoutClass);
-                }
-                modalGridView.classList.add(currentLayoutClass);
-            }
-
-            imageViewer.classList.add('visible');
-            imageViewer.style.display = 'flex';
-            if(projectGrid) projectGrid.classList.add('blurred');
-            if(siteHeader) siteHeader.classList.add('blurred');
-            document.body.classList.add('modal-open');
-            toggleGridView(false);
-        };
-
-        const closeModal = function() {
-            if (!imageViewer) return;
-            imageViewer.classList.remove('visible');
-            imageViewer.style.display = 'none';
-            if(projectGrid) projectGrid.classList.remove('blurred');
-            if(siteHeader) siteHeader.classList.remove('blurred');
-            document.body.classList.remove('modal-open');
-            clearVimeo();
-            isVimeoMode = false;
-
-            if (imageViewer.classList.contains('grid-view-active')) {
-                toggleGridView(false);
-            }
-            if (currentLayoutClass && modalGridView) {
-                modalGridView.classList.remove(currentLayoutClass);
-                currentLayoutClass = '';
-            }
-        };
-        
-        const showNextImage = function() {
-            if (isVimeoMode || currentGallery.length === 0) return;
-            currentIndex = (currentIndex + 1) % currentGallery.length;
-            updateModal();
-        };
-        const showPrevImage = function() {
-            if (isVimeoMode || currentGallery.length === 0) return;
-            currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-            updateModal();
-        };
-
-        if (projectGrid) {
-            projectGrid.addEventListener('click', (e) => {
-                const item = e.target.closest('.project-item');
-                if (!item || !projectGrid.contains(item)) return;
-
-                const vimeoId = item.dataset.vimeo;
-                if (vimeoId) {
-                    openVimeoModal(vimeoId);
-                    return;
-                }
-
-                const galleryArray = JSON.parse(item.dataset.gallery || '[]');
-                let layoutClass = '';
-                for (const cls of item.classList) {
-                    if (cls.endsWith('-project')) {
-                        layoutClass = cls.replace('-project', '-layout');
-                        break;
-                    }
-                }
-                openModal(galleryArray, layoutClass);
-            });
-        }
-
-        if (modalClose) modalClose.addEventListener('click', closeModal);
-        if (modalNavs[0]) modalNavs[0].addEventListener('click', showPrevImage);
-        if (modalNavs[1]) modalNavs[1].addEventListener('click', showNextImage);
-
-        if (imageViewer) {
-            imageViewer.addEventListener('click', (e) => {
-                if (e.target === imageViewer || e.target === modalContent) closeModal();
-            });
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (!imageViewer || !imageViewer.classList.contains('visible')) return;
-            
-            if (!isVimeoMode && !imageViewer.classList.contains('grid-view-active')) {
-                if (e.key === 'ArrowRight') showNextImage();
-                if (e.key === 'ArrowLeft') showPrevImage();
-            }
-            if (e.key === 'Escape') closeModal();
-        });
-    }
-
-    const setupLinkViewTransitions = () => {
-        if (!document.startViewTransition) return;
-
-        const isModifiedClick = (event) =>
-            event.button !== 0 ||
-            event.metaKey ||
-            event.ctrlKey ||
-            event.shiftKey ||
-            event.altKey;
-
-        document.addEventListener('click', (event) => {
-            const target = event.target;
-            if (!(target instanceof Element)) return;
-            const anchor = target.closest('a[href]');
-            if (!anchor) return;
-            if (anchor.target && anchor.target !== '_self') return;
-            if (anchor.hasAttribute('download')) return;
-            if (isModifiedClick(event)) return;
-
-            const url = new URL(anchor.href, window.location.href);
-            if (url.origin !== window.location.origin) return;
-            if (!['http:', 'https:'].includes(url.protocol)) return;
-
-            event.preventDefault();
-            document.startViewTransition(() => {
-                window.location.href = url.href;
-                return new Promise(() => {});
-            });
-        });
-    };
-
-    setupLinkViewTransitions();
-});
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Seungwon Choi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230000ff%22/></svg>">
+</head>
+<body id="page-index">
+    <header class="site-header">
+        <div class="logo">
+            <a href="/">
+                <span class="original-name">STEPHEN CHOI</span>
+                <span class="hover-name">SEUNGWON CHOI</span>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/projects">PROJECTS</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main-container">
+        <div class="random-landing-pair" id="random-landing-pair"></div>
+    </main>
+    <script src="script.js"></script>
+    <div class="info-link-container">
+        <a href="/info">INFO</a>
+    </div>
+</body>
+</html>

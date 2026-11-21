@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 vimeoWrapper.remove();
                 vimeoWrapper = null;
             }
+            if (imageViewer) imageViewer.style.display = '';
             if (modalContent) modalContent.style.display = '';
             if (modalGridView) modalGridView.style.display = '';
             if (modalImage) modalImage.style.display = '';
@@ -168,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             vimeoWrapper = document.createElement('div');
             vimeoWrapper.className = 'modal-vimeo-frame';
-            vimeoWrapper.style.cssText = 'position: relative; width: 80vw; max-width: 1120px; height: 45vw; max-height: 630px; z-index: 1020; background: #000;';
+            vimeoWrapper.style.cssText = 'position: relative; height: min(85vh, 900px); width: calc(min(85vh, 900px) * 9 / 16); max-width: 90vw; z-index: 1020; background: #000;';
 
             const iframe = document.createElement('iframe');
             iframe.src = `https://player.vimeo.com/video/${vimeoId}?title=0&byline=0&portrait=0`;
@@ -180,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modalContent.appendChild(vimeoWrapper);
 
             imageViewer.classList.add('visible');
+            imageViewer.style.display = 'flex';
             if (projectGrid) projectGrid.classList.add('blurred');
             if (siteHeader) siteHeader.classList.add('blurred');
             document.body.classList.add('modal-open');
@@ -244,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             imageViewer.classList.add('visible');
+            imageViewer.style.display = 'flex';
             if(projectGrid) projectGrid.classList.add('blurred');
             if(siteHeader) siteHeader.classList.add('blurred');
             document.body.classList.add('modal-open');
@@ -253,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModal = function() {
             if (!imageViewer) return;
             imageViewer.classList.remove('visible');
+            imageViewer.style.display = 'none';
             if(projectGrid) projectGrid.classList.remove('blurred');
             if(siteHeader) siteHeader.classList.remove('blurred');
             document.body.classList.remove('modal-open');

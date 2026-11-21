@@ -483,9 +483,9 @@ body {
         width: 100%;
         height: auto;
         min-height: 0;
-        padding: 1.25rem 1.5rem 3.5rem;
+        padding: 2rem 1.5rem 4.25rem;
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
     }
     
@@ -494,14 +494,15 @@ body {
         align-items: center;
     }
 
-    /* 모바일 세로 사진 */
+    /* 모바일 4:5 세로 사진: 크기 넉넉히 키우고 헤더에서 너무 안 붙게 */
     .random-landing-single {
-        width: 100%;
-        max-width: 86vw;
-        height: 54dvh;
+        width: 88vw;
+        max-width: 88vw;
+        height: 62dvh;
+        margin-top: 1.25rem;
     }
 
-    /* 모바일 가로 사진 (레퍼런스 느낌: 가로폭 넉넉, 세로 비율에 맞춰 깔끔하게) */
+    /* 모바일 가로 사진 (레퍼런스 느낌 유지) */
     .random-landing-single.is-landscape {
         width: 88vw;
         max-width: 88vw;

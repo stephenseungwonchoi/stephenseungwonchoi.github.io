@@ -121,7 +121,7 @@ body {
     position: fixed;
     inset: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     justify-content: center; 
     align-items: center;
@@ -464,19 +464,22 @@ body {
     }
 
     #page-index, #page-info {
-        height: auto;
+        height: 100dvh;
     }
 
     #page-index .site-header {
-        position: relative;
-        width: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
     }
 
     #page-index .main-container {
-        position: static;
-        width: 100%;
-        height: auto;
-        padding: 1rem 2rem;
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100dvh;
+        padding: 0;
     }
     
     #page-info .main-container {
@@ -485,8 +488,8 @@ body {
     }
 
     .random-landing-single {
-        width: 90vw;
-        height: 65vh;
+        width: 78vw;
+        height: 52vh;
     }
     
     .project-grid { 
@@ -507,7 +510,7 @@ body {
     }
 
     .info-link-container {
-        bottom: 1rem;
-        right: 1rem;
+        bottom: 2rem;
+        right: 2rem;
     }
 }

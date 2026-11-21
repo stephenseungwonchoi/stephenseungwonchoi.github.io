@@ -3,31 +3,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const slideshowPage = document.querySelector('#page-index');
     if (slideshowPage) {
         const singleContainer = slideshowPage.querySelector('#random-landing-single');
-        const candidatePaths = [
-            ['weblanding1.avif', 'img/weblanding1.avif'],
-            ['weblanding2.avif', 'img/weblanding2.avif'],
-            ['weblanding3.avif', 'img/weblanding3.avif']
+        const landingImages = [
+            '/img/weblanding1.avif',
+            '/img/weblanding2.avif',
+            '/img/weblanding3.avif'
         ];
 
-        if (singleContainer && candidatePaths.length > 0) {
-            const randomIndex = Math.floor(Math.random() * candidatePaths.length);
-            const pathsToTry = candidatePaths[randomIndex];
+        if (singleContainer && landingImages.length > 0) {
+            const randomIndex = Math.floor(Math.random() * landingImages.length);
+            const pickedImage = landingImages[randomIndex];
 
             singleContainer.innerHTML = '';
+            singleContainer.classList.remove('is-landscape', 'is-portrait');
+
             const img = document.createElement('img');
+            img.src = pickedImage;
             img.alt = '랜딩 포트폴리오 사진';
 
-            let pathIndex = 0;
-            const tryNextPath = () => {
-                if (pathIndex >= pathsToTry.length) {
-                    return;
+            img.addEventListener('load', () => {
+                if (img.naturalWidth > img.naturalHeight) {
+                    singleContainer.classList.add('is-landscape');
+                } else {
+                    singleContainer.classList.add('is-portrait');
                 }
-                img.src = pathsToTry[pathIndex++];
-            };
+            });
 
-            img.addEventListener('error', tryNextPath);
+            img.addEventListener('error', () => {
+                singleContainer.innerHTML = `<p style="color:#000;font-size:12px;">이미지 로드 실패: ${pickedImage}</p>`;
+            });
+
             singleContainer.appendChild(img);
-            tryNextPath();
         }
     }
 

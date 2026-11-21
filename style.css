@@ -437,15 +437,15 @@ body {
 @media (max-width: 992px) {
     .site-header {
         position: relative;
-        width: auto;
-        padding: 2rem;
+        width: 100%;
+        padding: 1.5rem 1.5rem 0.75rem;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        gap: 0.45rem;
     }
     .site-header .logo {
-        letter-spacing: 0.35em;
-        margin-right: -0.35em;
+        letter-spacing: 0.25em;
+        margin-right: -0.25em;
     }
 
     .main-nav {
@@ -460,26 +460,33 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 1rem 2rem;
+        padding: 1rem 1.5rem;
     }
 
     #page-index, #page-info {
-        height: 100dvh;
+        min-height: 100dvh;
+        height: auto;
+        overflow: hidden;
     }
 
     #page-index .site-header {
-        position: fixed;
-        top: 0;
-        left: 0;
+        position: relative;
+        top: auto;
+        left: auto;
         width: 100%;
     }
 
     #page-index .main-container {
-        position: fixed;
-        inset: 0;
-        width: 100vw;
-        height: 100dvh;
-        padding: 0;
+        position: relative;
+        inset: auto;
+        flex: 1 1 auto;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 1.25rem 1.5rem 3.5rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
     }
     
     #page-info .main-container {
@@ -487,9 +494,20 @@ body {
         align-items: center;
     }
 
+    /* 모바일 세로 사진 */
     .random-landing-single {
-        width: 78vw;
-        height: 52vh;
+        width: 100%;
+        max-width: 86vw;
+        height: 54dvh;
+    }
+
+    /* 모바일 가로 사진 (레퍼런스 느낌: 가로폭 넉넉, 세로 비율에 맞춰 깔끔하게) */
+    .random-landing-single.is-landscape {
+        width: 88vw;
+        max-width: 88vw;
+        height: auto;
+        max-height: 36dvh;
+        margin-top: 0.5rem;
     }
     
     .project-grid { 
@@ -510,7 +528,7 @@ body {
     }
 
     .info-link-container {
-        bottom: 2rem;
-        right: 2rem;
+        bottom: 1.25rem;
+        right: 1.5rem;
     }
 }

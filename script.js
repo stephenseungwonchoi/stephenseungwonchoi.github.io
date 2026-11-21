@@ -1,30 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 랜딩 페이지 랜덤 2장 표시 ---
+    // --- 랜딩 페이지 랜덤 1장 표시 ---
     const slideshowPage = document.querySelector('#page-index');
     if (slideshowPage) {
-        const pairContainer = slideshowPage.querySelector('#random-landing-pair');
+        const singleContainer = slideshowPage.querySelector('#random-landing-single');
         const landingImages = [
             'img/weblanding1.avif',
             'img/weblanding2.avif',
             'img/weblanding3.avif'
         ];
 
-        if (pairContainer && landingImages.length >= 2) {
-            const shuffled = [...landingImages];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
+        if (singleContainer && landingImages.length > 0) {
+            const randomIndex = Math.floor(Math.random() * landingImages.length);
+            const pickedImage = landingImages[randomIndex];
 
-            const pickedTwo = shuffled.slice(0, 2);
-            pairContainer.innerHTML = '';
-
-            pickedTwo.forEach((src, idx) => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = `포트폴리오 랜덤 사진 ${idx + 1}`;
-                pairContainer.appendChild(img);
-            });
+            singleContainer.innerHTML = '';
+            const img = document.createElement('img');
+            img.src = pickedImage;
+            img.alt = '랜딩 포트폴리오 사진';
+            singleContainer.appendChild(img);
         }
     }
 

@@ -164,6 +164,47 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentGallery = [];
         let currentIndex = 0;
         let currentLayoutClass = '';
+        let isVimeoMode = false;
+        let vimeoWrapper = null;
+
+        const clearVimeo = function() {
+            if (vimeoWrapper) {
+                vimeoWrapper.remove();
+                vimeoWrapper = null;
+            }
+            modalImage.style.display = '';
+            modalNavs.forEach(nav => { nav.style.display = ''; });
+            modalCounter.style.display = '';
+            modalGridToggle.style.display = '';
+        };
+
+        const openVimeoModal = function(vimeoId) {
+            clearVimeo();
+            isVimeoMode = true;
+
+            modalImage.style.display = 'none';
+            modalNavs.forEach(nav => { nav.style.display = 'none'; });
+            modalCounter.style.display = 'none';
+            modalGridToggle.style.display = 'none';
+
+            vimeoWrapper = document.createElement('div');
+            vimeoWrapper.className = 'modal-vimeo-frame';
+            vimeoWrapper.style.cssText = 'position: relative; width: 100%; max-width: 1120px; aspect-ratio: 16 / 9; z-index: 1015;';
+
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0`;
+            iframe.style.cssText = 'width: 100%; height: 100%; border: 0;';
+            iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+            iframe.allowFullscreen = true;
+
+            vimeoWrapper.appendChild(iframe);
+            modalContent.appendChild(vimeoWrapper);
+
+            imageViewer.classList.add('visible');
+            if (projectGrid) projectGrid.classList.add('blurred');
+            siteHeader.classList.add('blurred');
+            document.body.classList.add('modal-open');
+        };
 
         const updateModal = function() {
             if (currentGallery.length > 0) {
@@ -209,6 +250,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const openModal = function(galleryData, layoutClass = '') {
             if (!galleryData || galleryData.length === 0) return;
+            clearVimeo();
+            isVimeoMode = false;
+
             currentGallery = galleryData;
             currentIndex = 0;
             currentLayoutClass = layoutClass; 
@@ -230,6 +274,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if(projectGrid) projectGrid.classList.remove('blurred');
             siteHeader.classList.remove('blurred');
             document.body.classList.remove('modal-open');
+            clearVimeo();
+            isVimeoMode = false;
+
             if (imageViewer.classList.contains('grid-view-active')) {
                 toggleGridView(false);
             }
@@ -240,16 +287,24 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         const showNextImage = function() {
+            if (isVimeoMode || currentGallery.length === 0) return;
             currentIndex = (currentIndex + 1) % currentGallery.length;
             updateModal();
         };
         const showPrevImage = function() {
+            if (isVimeoMode || currentGallery.length === 0) return;
             currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
             updateModal();
         };
 
         projectItems.forEach(item => {
             item.addEventListener('click', () => {
+                const vimeoId = item.dataset.vimeo;
+                if (vimeoId) {
+                    openVimeoModal(vimeoId);
+                    return;
+                }
+
                 const galleryArray = JSON.parse(item.dataset.gallery || '[]' );
                 
                 let layoutClass = '';
@@ -268,12 +323,12 @@ document.addEventListener('DOMContentLoaded', () => {
         modalNavs[1].addEventListener('click', showNextImage);
 
         imageViewer.addEventListener('click', (e) => {
-            if (e.target === imageViewer) closeModal();
+            if (e.target === imageViewer || e.target === modalContent) closeModal();
         });
         document.addEventListener('keydown', (e) => {
             if (!imageViewer.classList.contains('visible')) return;
             
-            if (!imageViewer.classList.contains('grid-view-active')) {
+            if (!isVimeoMode && !imageViewer.classList.contains('grid-view-active')) {
                 if (e.key === 'ArrowRight') showNextImage();
                 if (e.key === 'ArrowLeft') showPrevImage();
             }

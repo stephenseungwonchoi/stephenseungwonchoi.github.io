@@ -483,7 +483,7 @@ body {
         width: 100%;
         height: auto;
         min-height: 0;
-        padding: 2rem 1.5rem 4.25rem;
+        padding: 1.5rem 1.5rem 4rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -494,12 +494,12 @@ body {
         align-items: center;
     }
 
-    /* 모바일 4:5 세로 사진: 크기 넉넉히 키우고 헤더에서 너무 안 붙게 */
+    /* 모바일 세로 사진: 스크린샷 비율에 맞춘 적정 크기와 위치 */
     .random-landing-single {
-        width: 88vw;
-        max-width: 88vw;
-        height: 62dvh;
-        margin-top: 1.25rem;
+        width: 82vw;
+        max-width: 82vw;
+        height: 55dvh;
+        margin-top: 1rem;
     }
 
     /* 모바일 가로 사진 (레퍼런스 느낌 유지) */

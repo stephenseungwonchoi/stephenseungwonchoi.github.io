@@ -360,11 +360,14 @@ body {
     position: fixed;
     bottom: 2.5rem;
     right: 2.5rem;
-    z-index: 100;
+    z-index: 200;
+    pointer-events: auto;
 }
 .info-link-container a {
     font-size: 0.8rem;
     letter-spacing: 0.05em;
+    display: inline-block;
+    pointer-events: auto;
 }
 
 /* --- 로고 호버 효과 --- */
@@ -483,7 +486,7 @@ body {
         width: 100%;
         height: auto;
         min-height: 0;
-        padding: 1.5rem 1.5rem 4rem;
+        padding: 1.25rem 1.5rem 3.5rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -494,15 +497,15 @@ body {
         align-items: center;
     }
 
-    /* 모바일 세로 사진: 스크린샷 비율에 맞춘 적정 크기와 위치 */
+    /* 모바일 세로 사진: 더 큼직하게 */
     .random-landing-single {
-        width: 82vw;
-        max-width: 82vw;
-        height: 55dvh;
-        margin-top: 1rem;
+        width: 92vw;
+        max-width: 92vw;
+        height: 62dvh;
+        margin-top: 0.5rem;
     }
 
-    /* 모바일 가로 사진 (레퍼런스 느낌 유지) */
+    /* 모바일 가로 사진: 첫 번째 컷처럼 중앙 여백에 깔끔하게 */
     .random-landing-single.is-landscape {
         width: 88vw;
         max-width: 88vw;
@@ -531,5 +534,6 @@ body {
     .info-link-container {
         bottom: 1.25rem;
         right: 1.5rem;
+        z-index: 200;
     }
 }

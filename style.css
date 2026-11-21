@@ -129,8 +129,8 @@ body {
 }
 
 .random-landing-single {
-    width: 42vw;
-    height: 62vh;
+    width: 52vw;
+    height: 72vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,8 +485,8 @@ body {
     }
 
     .random-landing-single {
-        width: 82vw;
-        height: 55vh;
+        width: 88vw;
+        height: 62vh;
     }
     
     .project-grid { 

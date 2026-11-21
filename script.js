@@ -3,21 +3,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const slideshowPage = document.querySelector('#page-index');
     if (slideshowPage) {
         const singleContainer = slideshowPage.querySelector('#random-landing-single');
-        const landingImages = [
-            'img/weblanding1.avif',
-            'img/weblanding2.avif',
-            'img/weblanding3.avif'
+        const candidatePaths = [
+            ['weblanding1.avif', 'img/weblanding1.avif'],
+            ['weblanding2.avif', 'img/weblanding2.avif'],
+            ['weblanding3.avif', 'img/weblanding3.avif']
         ];
 
-        if (singleContainer && landingImages.length > 0) {
-            const randomIndex = Math.floor(Math.random() * landingImages.length);
-            const pickedImage = landingImages[randomIndex];
+        if (singleContainer && candidatePaths.length > 0) {
+            const randomIndex = Math.floor(Math.random() * candidatePaths.length);
+            const pathsToTry = candidatePaths[randomIndex];
 
             singleContainer.innerHTML = '';
             const img = document.createElement('img');
-            img.src = pickedImage;
             img.alt = '랜딩 포트폴리오 사진';
+
+            let pathIndex = 0;
+            const tryNextPath = () => {
+                if (pathIndex >= pathsToTry.length) {
+                    return;
+                }
+                img.src = pathsToTry[pathIndex++];
+            };
+
+            img.addEventListener('error', tryNextPath);
             singleContainer.appendChild(img);
+            tryNextPath();
         }
     }
 

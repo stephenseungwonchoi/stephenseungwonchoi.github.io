@@ -110,7 +110,7 @@ body {
     align-items: center;
 }
 
-/* --- 메인 페이지(랜덤 1장 정중앙) 스타일 --- */
+/* --- 메인 페이지(랜덤 1장 정중앙 · 적정 크기) 스타일 --- */
 #page-index .site-header {
     position: fixed;
     top: 0;
@@ -129,8 +129,8 @@ body {
 }
 
 .random-landing-single {
-    width: 60vw;
-    height: 80vh;
+    width: 42vw;
+    height: 62vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,8 +485,8 @@ body {
     }
 
     .random-landing-single {
-        width: 100%;
-        height: 60vh;
+        width: 82vw;
+        height: 55vh;
     }
     
     .project-grid { 
